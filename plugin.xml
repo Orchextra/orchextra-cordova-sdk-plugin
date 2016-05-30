@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="orchextra-cordovaplugin" version="0.0.1">
+    <name>orchextra</name>
+    <js-module name="HttpNative" src="www/orchextra.js">
+        <clobbers target="window.HttpNative" />
+    </js-module>
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="OrchextraWrapper">
+                <param name="ios-package" value="OrchextraWrapper" />
+            </feature>
+        </config-file>
+        <framework src="CoreLocation.framework" />
+        <framework src="AVFoundation.framework" />
+        <framework src="AdSupport.framework" />
+        <framework src="src/ios/Orchextra/Orchextra.framework" custom="true" />
+        <resource-file src="src/ios/Orchextra/Orchextra.bundle" />
+        <source-file src="src/ios/OrchextraWrapper.h" />
+        <source-file src="src/ios/OrchextraWrapper.m" />
+    </platform>
+</plugin>
