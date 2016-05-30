@@ -1,0 +1,17 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+        maven { url "https://jitpack.io" }
+}
+
+dependencies {
+  compile 'com.github.Orchextra.orchextra-android-sdk:orchextrasdk:2.3.0'
+}
