@@ -78,7 +78,7 @@ public class OrchextraWrapper extends CordovaPlugin {
                 Orchextra.start("42cb4ba46f86bdc276940cd9cf2cdf8b7f7f579d", "16163c4041f2f317ac300e582c3fb663982a6e9e");
                 callbackContext.success();
             }
-        };
+        });
     }
 
     private void openScanner(CallbackContext callbackContext) {
