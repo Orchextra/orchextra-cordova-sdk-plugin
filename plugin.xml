@@ -13,10 +13,12 @@
         <framework src="CoreLocation.framework" />
         <framework src="AVFoundation.framework" />
         <framework src="AdSupport.framework" />
-        <framework src="src/ios/Orchextra/Orchextra.framework" custom="true" />
-        <resource-file src="src/ios/Orchextra/Orchextra.bundle" />
+        <framework src="src/ios/Framework/Orchextra.framework" custom="true" />
+        <resource-file src="src/ios/Framework/Orchextra.bundle" />
         <source-file src="src/ios/OrchextraWrapper.h" />
         <source-file src="src/ios/OrchextraWrapper.m" />
+        <source-file src="src/ios/Helpers/Categories/CDVInvokedUrlCommand+Orchextra.h" />
+        <source-file src="src/ios/Helpers/Categories/CDVInvokedUrlCommand+Orchextra.m" />
     </platform>
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">

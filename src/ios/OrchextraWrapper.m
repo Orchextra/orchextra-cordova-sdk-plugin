@@ -6,19 +6,19 @@
 //
 //
 
-#import "ORCOrchextraWrapper.h"
+#import "OrchextraWrapper.h"
 
 #import <Orchextra/Orchextra.h>
 #import "CDVInvokedUrlCommand+Orchextra.h"
 
 
-@interface ORCOrchextraWrapper()
+@interface OrchextraWrapper()
 
 @property (strong, nonatomic) Orchextra *orchextra;
 
 @end
 
-@implementation ORCOrchextraWrapper
+@implementation OrchextraWrapper
 
 #pragma mark - Init
 
@@ -32,12 +32,18 @@
 
 #pragma mark - PUBLIC
 
-- (void)startOrchextra:(CDVInvokedUrlCommand*)command
+- (void)init:(CDVInvokedUrlCommand*)command;
+{
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)start:(CDVInvokedUrlCommand*)command
 {
     NSString *apiKey    = [command apiKey];
     NSString *apiSecret = [command apiSecret];
 
-    ORCOrchextraWrapper* __weak weakSelf = self;
+    OrchextraWrapper* __weak weakSelf = self;
     [self.orchextra setApiKey:apiKey
                                 apiSecret:apiSecret
                                completion:^(BOOL success, NSError *error)
@@ -53,31 +59,16 @@
                                 }];
 }
 
-- (void)stopOrchextraServices:(CDVInvokedUrlCommand*)command
-{
-    [self.orchextra stopOrchextraServices];
-}
-
 - (void)handlePush:(CDVInvokedUrlCommand*)command
 {
     NSDictionary *localNotificationInfo = [command localNotificationInfo];
     [ORCPushManager handlePush:localNotificationInfo];
 }
 
-- (void)logLevel:(CDVInvokedUrlCommand*)command
-{
-    [Orchextra logLevel:ORCLogLevelAll];
-}
 
-- (void)startScanner:(CDVInvokedUrlCommand*)command
+- (void)openScanner:(CDVInvokedUrlCommand*)command
 {
     [[Orchextra sharedInstance] startScanner];
-}
-
-- (void)setUser:(CDVInvokedUrlCommand*)command
-{
-    ORCUser *user = [[ORCUser alloc] init];
-    [self.orchextra setUser:user];
 }
 
 #pragma mark - Callback Methods

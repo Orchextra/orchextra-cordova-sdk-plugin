@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <Cordova/CDV.h>
 
-@interface ORCOrchextraWrapper : CDVPlugin
+@interface OrchextraWrapper : CDVPlugin
 
-- (void)startOrchextra:(CDVInvokedUrlCommand*)command;
-- (void)startScanner:(CDVInvokedUrlCommand*)command;
+- (void)init:(CDVInvokedUrlCommand*)command;
+- (void)start:(CDVInvokedUrlCommand*)command;
+- (void)openScanner:(CDVInvokedUrlCommand*)command;
 
 - (void)handlePush:(CDVInvokedUrlCommand*)command;
 
