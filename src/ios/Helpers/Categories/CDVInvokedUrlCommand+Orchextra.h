@@ -19,8 +19,9 @@
 - (NSString *)apiKey;
 - (NSString *)apiSecret;
 
-#pragma mark - Local Notifications
+#pragma mark -
 
 - (NSDictionary *)localNotificationInfo;
+- (ORCUser *)user;
 
 @end

@@ -16,6 +16,9 @@
 
 @property (strong, nonatomic) Orchextra *orchextra;
 
+@property (strong, nonatomic) NSString *apiKey;
+@property (strong, nonatomic) NSString *apiSecret;
+
 @end
 
 @implementation OrchextraWrapper
@@ -34,18 +37,15 @@
 
 - (void)init:(CDVInvokedUrlCommand*)command;
 {
-    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    self.apiKey    = [command apiKey];
+    self.apiSecret = [command apiSecret];
 }
 
 - (void)start:(CDVInvokedUrlCommand*)command
 {
-    NSString *apiKey    = [command apiKey];
-    NSString *apiSecret = [command apiSecret];
-
     OrchextraWrapper* __weak weakSelf = self;
-    [self.orchextra setApiKey:apiKey
-                                apiSecret:apiSecret
+    [self.orchextra setApiKey:self.apiKey
+                                apiSecret:self.apiSecret
                                completion:^(BOOL success, NSError *error)
                                 {
                                     if (success)
@@ -59,12 +59,22 @@
                                 }];
 }
 
+- (void)setUser:(CDVInvokedUrlCommand*)command
+{
+    ORCUser *user = [command user];
+    [self.orchextra setUser:user];
+}
+
+- (void)stop:(CDVInvokedUrlCommand*)command
+{
+    [self.orchextra stopOrchextraServices];
+}
+
 - (void)handlePush:(CDVInvokedUrlCommand*)command
 {
     NSDictionary *localNotificationInfo = [command localNotificationInfo];
     [ORCPushManager handlePush:localNotificationInfo];
 }
-
 
 - (void)openScanner:(CDVInvokedUrlCommand*)command
 {
