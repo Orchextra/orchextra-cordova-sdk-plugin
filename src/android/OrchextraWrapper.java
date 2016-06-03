@@ -2,8 +2,9 @@ package orchextra;
 
 import android.app.Application;
 
+import com.gigigo.ggglogger.GGGLogImpl;
+import com.gigigo.orchextra.ORCUser;
 import com.gigigo.orchextra.Orchextra;
-import com.gigigo.orchextra.OrchextraCompletionCallback;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -12,71 +13,78 @@ import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import orchextra.utils.LogD;
+import orchextra.entities.OrchextraAuthTokens;
+import orchextra.sdk.OrchextraSdk;
+import orchextra.utils.DataParser;
 
 /**
  * This class echoes a string called from JavaScript.
  */
 public class OrchextraWrapper extends CordovaPlugin {
 
+    public static final String ACTION_INIT = "init";
+    public static final String ACTION_START = "start";
+    public static final String ACTION_SET_USER = "setUser";
+    public static final String ACTION_OPEN_SCANNER = "openScanner";
+
     private Application application;
+
+    private OrchextraSdk orchextraSdk;
+    private DataParser dataParser;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
 
         application = cordova.getActivity().getApplication();
+
+        orchextraSdk = new OrchextraSdk();
+        dataParser = new DataParser();
     }
 
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
-        if (action.equals("init")) {
-            initSdk(callbackContext);
+        if (action.equals(ACTION_INIT)) {
+            init(args, callbackContext);
             return true;
-        } else if (action.equals("start")) {
-            startSdk(callbackContext);
+        } else if (action.equals(ACTION_START)) {
+            start(callbackContext);
             return true;
-        } else if (action.equals("openScanner")) {
+        } else if (action.equals(ACTION_SET_USER)) {
+            setUser(args, callbackContext);
+            return true;
+        } else if (action.equals(ACTION_OPEN_SCANNER)) {
             openScanner(callbackContext);
             return true;
         }
         return false;
     }
 
-    private void initSdk(final CallbackContext callbackContext) {
-        cordova.getActivity().runOnUiThread(new Runnable() {
-            public void run() {
-                Orchextra.init(application, new OrchextraCompletionCallback() {
-                    @Override
-                    public void onSuccess() {
-                        callbackContext.success();
-                        LogD.i("Orchextra se ha inicializado correctamente");
-                    }
+    private void init(JSONArray args, final CallbackContext callbackContext) {
+        final OrchextraAuthTokens orchextraAuthTokens = dataParser.obtainApiKeyAndSecret(args);
 
-                    @Override
-                    public void onError(String s) {
-                        callbackContext.error(0);
-                        LogD.i("Se ha producido un error: " + s);
-                    }
-
-                    @Override
-                    public void onInit(String s) {
-                        callbackContext.error(0);
-                        LogD.i("Se ha producido un error en la inicializacion: " + s);
-                    }
-                });
-
-            }
-        });
+        if (orchextraAuthTokens != null) {
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    orchextraSdk.initSdk(application, orchextraAuthTokens, callbackContext);
+                }
+            });
+        } else {
+            GGGLogImpl.log("Api key or secret can't be null");
+            callbackContext.error(0);
+        }
     }
 
-    private void startSdk(final CallbackContext callbackContext) {
-
+    private void start(final CallbackContext callbackContext) {
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Orchextra.start("42cb4ba46f86bdc276940cd9cf2cdf8b7f7f579d", "16163c4041f2f317ac300e582c3fb663982a6e9e");
-                callbackContext.success();
+                if (orchextraSdk.startSdk()) {
+                    callbackContext.success();
+                } else {
+                    GGGLogImpl.log("You must call Orchextra Init method before start method");
+                    callbackContext.error(0);
+                }
             }
         });
     }
@@ -84,5 +92,15 @@ public class OrchextraWrapper extends CordovaPlugin {
     private void openScanner(CallbackContext callbackContext) {
         Orchextra.startScannerActivity();
         callbackContext.success();
+    }
+
+    private void setUser(JSONArray args, CallbackContext callbackContext) {
+        ORCUser orcUser = dataParser.obtainUser(args);
+
+        if (orcUser == null) {
+            callbackContext.error(0);
+        }
+
+        orchextraSdk.setUser(orcUser);
     }
 }
