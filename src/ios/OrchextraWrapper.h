@@ -13,6 +13,8 @@
 
 - (void)init:(CDVInvokedUrlCommand*)command;
 - (void)start:(CDVInvokedUrlCommand*)command;
+- (void)stop:(CDVInvokedUrlCommand*)command;
+
 - (void)setUser:(CDVInvokedUrlCommand*)command;
 
 - (void)openScanner:(CDVInvokedUrlCommand*)command;
