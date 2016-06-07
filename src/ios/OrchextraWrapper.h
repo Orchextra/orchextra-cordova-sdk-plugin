@@ -19,6 +19,4 @@
 
 - (void)openScanner:(CDVInvokedUrlCommand*)command;
 
-- (void)handlePush:(CDVInvokedUrlCommand*)command;
-
 @end

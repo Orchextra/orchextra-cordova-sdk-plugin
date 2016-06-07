@@ -41,7 +41,7 @@ typedef NS_ENUM(NSUInteger,ORCUserParam)
 
 #pragma mark - Local Notifications
 
-- (NSDictionary *)localNotificationInfo
+- (id)localNotificationInfo
 {
     return [self argumentAtIndex:0 withDefault:nil];
 }

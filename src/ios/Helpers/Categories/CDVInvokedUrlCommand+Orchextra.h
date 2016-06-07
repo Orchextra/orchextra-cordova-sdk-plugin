@@ -21,7 +21,7 @@
 
 #pragma mark -
 
-- (NSDictionary *)localNotificationInfo;
+- (id)localNotificationInfo;
 - (ORCUser *)user;
 
 @end
