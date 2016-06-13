@@ -7,12 +7,16 @@ var HttpNative = {
     start: function(url, params, success, failure) {
         exec(success, failure, "OrchextraWrapper", "start", []);
     },
+    stop: function(url, params, success, failure) {
+        exec(success, failure, "OrchextraWrapper", "stop", []);
+    },
     openScanner: function(url, params, success, failure) {
         exec(success, failure, "OrchextraWrapper", "openScanner", []);
     },
     setUser: function(url, params, header, failure) {
         exec(success, failure, "OrchextraWrapper", "setUser", []);
     }
+    
 };
 
 window.HttpNative = HttpNative

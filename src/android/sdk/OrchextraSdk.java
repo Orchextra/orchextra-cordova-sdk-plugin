@@ -50,4 +50,13 @@ public class OrchextraSdk {
     public void setUser(ORCUser orcUser) {
         Orchextra.setUser(orcUser);
     }
+
+    public boolean stopSdk() {
+        Orchextra.stop();
+        return true;
+    }
+
+    public void startScanner() {
+        Orchextra.startScannerActivity();
+    }
 }
