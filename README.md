@@ -1,6 +1,6 @@
 # Orchextra Cordova Plugin for iOS and Android
 
-A cordova plugin that gives you access to Orchextra platform of iOS and Android from your hybrid app.
+A cordova plugin that gives you access to iOS and Android Orchextra platform  from your hybrid app.
 
 **Android:** <https://github.com/Orchextra/orchextra-android-sdk>
 
