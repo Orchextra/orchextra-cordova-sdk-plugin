@@ -1,6 +1,6 @@
 var exec = require('cordova/exec');
 
-var OrchextraPlugin = {
+var orchextra = {
     init: function(apiKey, apiSecret, success, failure) {
         exec(success, failure, "OrchextraWrapper", "init", [apiKey, apiSecret]);
     },
@@ -16,9 +16,9 @@ var OrchextraPlugin = {
     setUser: function(user, params, header, failure) {
         exec(success, failure, "OrchextraWrapper", "setUser", [user]);
     }
-    
+
 };
 
-window.OrchextraPlugin = OrchextraPlugin
+window.orchextra = orchextra
 
-module.exports = OrchextraPlugin;
+module.exports = orchextra;
