@@ -1,8 +1,8 @@
 var exec = require('cordova/exec');
 
-var HttpNative = {
-    init: function(url, params, success, failure) {
-        exec(success, failure, "OrchextraWrapper", "init", []);
+var OrchextraPlugin = {
+    init: function(apiKey, apiSecret, success, failure) {
+        exec(success, failure, "OrchextraWrapper", "init", [apiKey, apiSecret]);
     },
     start: function(url, params, success, failure) {
         exec(success, failure, "OrchextraWrapper", "start", []);
@@ -10,11 +10,11 @@ var HttpNative = {
     openScanner: function(url, params, success, failure) {
         exec(success, failure, "OrchextraWrapper", "openScanner", []);
     },
-    setUser: function(url, params, header, failure) {
-        exec(success, failure, "OrchextraWrapper", "setUser", []);
+    setUser: function(user, params, header, failure) {
+        exec(success, failure, "OrchextraWrapper", "setUser", [user]);
     }
 };
 
-window.HttpNative = HttpNative
+window.OrchextraPlugin = OrchextraPlugin
 
-module.exports = HttpNative;
+module.exports = OrchextraPlugin;
