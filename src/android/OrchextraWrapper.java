@@ -24,6 +24,7 @@ public class OrchextraWrapper extends CordovaPlugin {
 
     public static final String ACTION_INIT = "init";
     public static final String ACTION_START = "start";
+    public static final String ACTION_STOP = "stop";
     public static final String ACTION_SET_USER = "setUser";
     public static final String ACTION_OPEN_SCANNER = "openScanner";
 
@@ -49,6 +50,9 @@ public class OrchextraWrapper extends CordovaPlugin {
             return true;
         } else if (action.equals(ACTION_START)) {
             start(callbackContext);
+            return true;
+        } else if (action.equals(ACTION_STOP)) {
+            stop(callbackContext);
             return true;
         } else if (action.equals(ACTION_SET_USER)) {
             setUser(args, callbackContext);
@@ -89,8 +93,22 @@ public class OrchextraWrapper extends CordovaPlugin {
         });
     }
 
+    private void stop(final CallbackContext callbackContext) {
+        cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (orchextraSdk.stopSdk()) {
+                    callbackContext.success();
+                } else {
+                    GGGLogImpl.log("You must call Orchextra Init method before start method");
+                    callbackContext.error(0);
+                }
+            }
+        });
+    }
+
     private void openScanner(CallbackContext callbackContext) {
-        Orchextra.startScannerActivity();
+        orchextraSdk.startScanner();
         callbackContext.success();
     }
 

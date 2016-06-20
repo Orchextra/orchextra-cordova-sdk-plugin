@@ -26,6 +26,8 @@
         <source-file src="src/ios/OrchextraWrapper.m" />
         <source-file src="src/ios/Helpers/Categories/CDVInvokedUrlCommand+Orchextra.h" />
         <source-file src="src/ios/Helpers/Categories/CDVInvokedUrlCommand+Orchextra.m" />
+        <source-file src="src/ios/Helpers/Categories/AppDelegate+notification.h" />
+        <source-file src="src/ios/Helpers/Categories/AppDelegate+notification.m" />
     </platform>
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">

@@ -59,20 +59,20 @@
                                 }];
 }
 
+- (void)stop:(CDVInvokedUrlCommand*)command
+{
+    [self.orchextra stopOrchextraServices];
+}
+
 - (void)setUser:(CDVInvokedUrlCommand*)command
 {
     ORCUser *user = [command user];
     [self.orchextra setUser:user];
 }
 
-- (void)stop:(CDVInvokedUrlCommand*)command
-{
-    [self.orchextra stopOrchextraServices];
-}
-
 - (void)handlePush:(CDVInvokedUrlCommand*)command
 {
-    NSDictionary *localNotificationInfo = [command localNotificationInfo];
+    id localNotificationInfo = [command localNotificationInfo];
     [ORCPushManager handlePush:localNotificationInfo];
 }
 
