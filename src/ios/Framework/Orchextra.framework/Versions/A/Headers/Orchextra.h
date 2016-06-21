@@ -10,6 +10,7 @@
 
 #import "ORCAction.h"
 #import "ORCUser.h"
+#import "ORCTag.h"
 #import "ORCPushManager.h"
 #import "ORCActionManager.h"
 
@@ -23,8 +24,11 @@
 #import "ORCWebViewViewController.h"
 
 
-@class ORCSettingsInteractor;
 @class ORCApplicationCenter;
+@class ORCBusinessUnit;
+@class ORCCustomField;
+@class ORCSettingsInteractor;
+@class ORCTag;
 
 @protocol OrchextraCustomActionDelegate <NSObject>
 
@@ -55,8 +59,37 @@
 
 // SETTINGS
 
-- (void)setUser:(ORCUser *)user;
+- (void)bindUser:(ORCUser *)user;
+- (void)unbindUser;
 - (ORCUser *)currentUser;
+
+// CUSTOM FIELDS
+
+- (NSArray<ORCCustomField *> *)loadAvailableCustomFields;
+
+- (NSArray<ORCCustomField *> *)loadCustomFields;
+- (void)saveCustomFields:(NSArray<ORCCustomField *> *)customFields;
+- (BOOL)updateCustomFieldValue:(id)value withKey:(NSString *)key;
+
+// USER TAGS
+
+- (NSArray <ORCTag *> *)getUserTags;
+- (void)setUserTags:(NSArray <ORCTag *> *)userTags;
+
+// DEVICE TAGS
+
+- (NSArray <ORCTag *> *)getDeviceTags;
+- (void)setDeviceTags:(NSArray <ORCTag *> *)deviceTags;
+
+// USER BUSINESS UNITS
+
+- (NSArray <ORCBusinessUnit *> *)getUserBusinessUnits;
+- (void)setUserBusinessUnits:(NSArray <ORCBusinessUnit *> *)businessUnits;
+
+// DEVICE BUSINESS UNITS
+
+- (NSArray <ORCBusinessUnit *> *)getDeviceBusinessUnits;
+- (void)setDeviceBussinessUnits:(NSArray <ORCBusinessUnit *> *)deviceBusinessUnits;
 
 // DEBUG
 

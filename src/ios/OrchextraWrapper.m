@@ -67,7 +67,7 @@
 - (void)setUser:(CDVInvokedUrlCommand*)command
 {
     ORCUser *user = [command user];
-    [self.orchextra setUser:user];
+    [self.orchextra bindUser:user];
 }
 
 - (void)handlePush:(CDVInvokedUrlCommand*)command
