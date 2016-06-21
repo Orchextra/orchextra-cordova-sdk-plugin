@@ -4,16 +4,16 @@ var orchextra = {
     init: function(apiKey, apiSecret, success, failure) {
         exec(success, failure, "OrchextraWrapper", "init", [apiKey, apiSecret]);
     },
-    start: function(url, params, success, failure) {
+    start: function(success, failure) {
         exec(success, failure, "OrchextraWrapper", "start", []);
     },
-    stop: function(url, params, success, failure) {
+    stop: function(success, failure) {
         exec(success, failure, "OrchextraWrapper", "stop", []);
     },
-    openScanner: function(url, params, success, failure) {
+    openScanner: function(success, failure) {
         exec(success, failure, "OrchextraWrapper", "openScanner", []);
     },
-    setUser: function(user, params, header, failure) {
+    setUser: function(user, success, failure) {
         exec(success, failure, "OrchextraWrapper", "setUser", [user]);
     }
 
