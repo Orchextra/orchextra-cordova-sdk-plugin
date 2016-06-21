@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="orchextra-cordovaplugin" version="0.0.1">
-    <name>orchextra</name>
-    <js-module name="HttpNative" src="www/orchextra.js">
-        <clobbers target="window.HttpNative" />
+    <name>Orchextra Plugin Cordova</name>
+    <js-module name="OrchextraPlugin" src="www/orchextra.js">
+        <clobbers target="window.OrchextraPlugin" />
     </js-module>
     <platform name="ios">
         <config-file parent="/*" target="config.xml">
