@@ -13,10 +13,9 @@ var orchextra = {
     openScanner: function(success, failure) {
         exec(success, failure, "OrchextraWrapper", "openScanner", []);
     },
-    setUser: function(user, success, failure) {
-        exec(success, failure, "OrchextraWrapper", "setUser", [user]);
+    bindUser: function(user, success, failure) {
+        exec(success, failure, "OrchextraWrapper", "bindUser", [user]);
     }
-
 };
 
 window.orchextra = orchextra
