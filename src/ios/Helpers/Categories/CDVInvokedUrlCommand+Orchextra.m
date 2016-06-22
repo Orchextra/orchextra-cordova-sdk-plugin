@@ -7,7 +7,8 @@
 //
 
 #import "CDVInvokedUrlCommand+Orchextra.h"
-#import <Orchextra/ORCUser.h>
+#import "ORCUser+JSON.h"
+
 
 typedef NS_ENUM(NSUInteger,ORCInitParam)
 {
@@ -15,13 +16,6 @@ typedef NS_ENUM(NSUInteger,ORCInitParam)
     ORCInitParamApiSecret = 1
 };
 
-typedef NS_ENUM(NSUInteger,ORCUserParam)
-{
-    ORCUserParamID = 0,
-    ORCUserParamBirthday = 1,
-    ORCUserParamGender = 2,
-    ORCUserParamTags = 3
-};
 
 @implementation CDVInvokedUrlCommand (Orchextra)
 
@@ -50,46 +44,11 @@ typedef NS_ENUM(NSUInteger,ORCUserParam)
 
 - (ORCUser *)user
 {
-    ORCUser *user = [[ORCUser alloc] init];
+    NSDictionary *userDictionary = [self argumentAtIndex:0 withDefault:nil];
     
-    user.crmID = [self argumentAtIndex:ORCUserParamID withDefault:nil];
-    user.birthday = [self birthday];
-    user.gender = [self gender];
-    user.tags = [self argumentAtIndex:ORCUserParamTags withDefault:nil];
+    ORCUser *user = [ORCUser userWithDictionary:userDictionary];
     
     return user;
-}
-
-#pragma mark - Private
-
-- (NSDate *)birthday
-{
-    NSString* dateString = [self argumentAtIndex:ORCUserParamBirthday withDefault:nil];
-    if (!dateString) return nil;
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy/MM/dd"];
-    NSDate *date = [dateFormatter dateFromString:dateString];
-    
-    return date;
-}
-
-- (ORCUserGender)gender
-{
-    NSString* genderString = [[self argumentAtIndex:ORCUserParamGender withDefault:nil] lowercaseString];
-    
-    if ([genderString isEqualToString:@"f"])
-    {
-        return ORCGenderFemale;
-    }
-    else if([genderString isEqualToString:@"m"])
-    {
-        return ORCGenderMale;
-    }
-    else
-    {
-        return ORCGenderNone;
-    }
 }
 
 @end

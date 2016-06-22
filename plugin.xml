@@ -29,6 +29,12 @@
         <source-file src="src/ios/Helpers/Categories/CDVInvokedUrlCommand+Orchextra.m" />
         <source-file src="src/ios/Helpers/Categories/AppDelegate+notification.h" />
         <source-file src="src/ios/Helpers/Categories/AppDelegate+notification.m" />
+        <source-file src="src/ios/Helpers/Categories/NSDictionary+JSON.h" />
+        <source-file src="src/ios/Helpers/Categories/NSDictionary+JSON.m" />
+        <source-file src="src/ios/Helpers/Categories/ORCUser+JSON.h" />
+        <source-file src="src/ios/Helpers/Categories/ORCUser+JSON.m" />
+        <source-file src="src/ios/Helpers/Categories/NSString+Gender.h" />
+        <source-file src="src/ios/Helpers/Categories/NSString+Gender.m" />
     </platform>
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">

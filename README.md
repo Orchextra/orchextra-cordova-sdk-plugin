@@ -22,7 +22,7 @@ Start by creating a project in [Orchextra dashboard][dashboard], if you haven't 
 - `init`: Orchextra initialization.
 - `start`: Start listening to events.
 - `stop`: Stop listening to events.
-- `setUser`: (Optional) Set a local representation of a user persisted to the Orchextra Database to help to create a good user segmentation.
+- `bindUser`: (Optional) Set a local representation of a user persisted to the Orchextra Database to help to create a good user segmentation.
 - `openScanner `: Launch scanner.
 
 
@@ -51,21 +51,21 @@ Start listening to events.
 Stop listening to events.
 
 | Params |
-| --- |
+| --- |****
 | - |
 
 	orchextra.stop()
 --
-### SetUser
+### BindUser
 
 Set a local representation of a user persisted to the Orchextra Database to help to create a good user segmentation. This method is optional and could be set up at any time..
 
-| Params |
+| Param |
 | --- |
-| [ crmID `string`, birthday `string`*(optional)*, gender `string`*(optional)* , tags `array[strings]`*(optional)* ] | 
->*Example* `[ 'sergio24', '1985/10/21', 'M', ['Visa', 'Master Card'] ]`
+| { 'crmId' : `string`, 'birthday' : `string`*(optional)*, 'gender' : `string`*(optional)* , 'tags' : `array[strings]`*(optional)* } | 
+>*Example* `{ 'crmdId' : 'sergio24', 'birthday' : '1985/10/21', 'gender' : 'M', 'tags' : ['Visa', 'Master Card'] }`
 
-	orchextra.setUser([ 'sergio24', '1985/10/21', 'M', ['Visa', 'Master Card'] ])
+	orchextra.bindUser(UserDictionary)
 
 **- Birthday String Format:** aaaa/mm/dd  
  
