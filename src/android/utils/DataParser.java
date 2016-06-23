@@ -4,15 +4,16 @@ import com.gigigo.orchextra.ORCUser;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import orchextra.entities.OrchextraAuthTokens;
+import orchextra.entities.UserMiddleWare;
 
 public class DataParser {
 
@@ -29,18 +30,15 @@ public class DataParser {
 
     public ORCUser obtainUser(JSONArray args) {
         try {
-            String crmId = args.getString(0);
+            JSONObject arg = (JSONObject) args.get(0);
 
-            String birthdateInString = args.getString(1);
-            GregorianCalendar birthDate = getBirthDate(birthdateInString);
+            Gson gson = new Gson();
+            UserMiddleWare userMiddleWare = gson.fromJson(arg.toString(), UserMiddleWare.class);
 
-            String genderInString = args.getString(2);
-            ORCUser.Gender gender = getGender(genderInString);
-
-            JSONArray tagListJson = args.getJSONArray(3);
-            ArrayList tagList = new ArrayList(Arrays.asList(getArrayTags(tagListJson)));
-
-            return new ORCUser(crmId, birthDate, gender, tagList);
+            return new ORCUser(userMiddleWare.getCrmId(),
+                    getBirthDate(userMiddleWare.getBirthday()),
+                    getGender(userMiddleWare.getGender()),
+                    new ArrayList<String>());
         } catch (Exception e) {
             return null;
         }
@@ -68,15 +66,6 @@ public class DataParser {
         } else if (genderInString.equals("f") || genderInString.equals("F")) {
             return ORCUser.Gender.ORCGenderFemale;
         } else {
-            return null;
-        }
-    }
-
-    private String[] getArrayTags(JSONArray tagListJson) {
-        try {
-            Gson gson = new Gson();
-            return gson.fromJson(tagListJson.toString(), String[].class);
-        } catch (Exception e) {
             return null;
         }
     }
