@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.gigigo.ggglogger.GGGLogImpl;
 import com.gigigo.orchextra.ORCUser;
-import com.gigigo.orchextra.Orchextra;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -25,7 +24,7 @@ public class OrchextraWrapper extends CordovaPlugin {
     public static final String ACTION_INIT = "init";
     public static final String ACTION_START = "start";
     public static final String ACTION_STOP = "stop";
-    public static final String ACTION_SET_USER = "setUser";
+    public static final String ACTION_BIND_USER = "bindUser";
     public static final String ACTION_OPEN_SCANNER = "openScanner";
 
     private Application application;
@@ -52,13 +51,13 @@ public class OrchextraWrapper extends CordovaPlugin {
             start(callbackContext);
             return true;
         } else if (action.equals(ACTION_STOP)) {
-            stop(callbackContext);
+            stop();
             return true;
-        } else if (action.equals(ACTION_SET_USER)) {
-            setUser(args, callbackContext);
+        } else if (action.equals(ACTION_BIND_USER)) {
+            bindUser(args);
             return true;
         } else if (action.equals(ACTION_OPEN_SCANNER)) {
-            openScanner(callbackContext);
+            openScanner();
             return true;
         }
         return false;
@@ -93,32 +92,27 @@ public class OrchextraWrapper extends CordovaPlugin {
         });
     }
 
-    private void stop(final CallbackContext callbackContext) {
+    private void stop() {
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (orchextraSdk.stopSdk()) {
-                    callbackContext.success();
                 } else {
                     GGGLogImpl.log("You must call Orchextra Init method before start method");
-                    callbackContext.error(0);
                 }
             }
         });
     }
 
-    private void openScanner(CallbackContext callbackContext) {
+    private void openScanner() {
         orchextraSdk.startScanner();
-        callbackContext.success();
     }
 
-    private void setUser(JSONArray args, CallbackContext callbackContext) {
+    private void bindUser(JSONArray args) {
         ORCUser orcUser = dataParser.obtainUser(args);
 
-        if (orcUser == null) {
-            callbackContext.error(0);
+        if (orcUser != null) {
+            orchextraSdk.setUser(orcUser);
         }
-
-        orchextraSdk.setUser(orcUser);
     }
 }
