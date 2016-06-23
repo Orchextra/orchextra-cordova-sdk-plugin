@@ -58,16 +58,16 @@ Stop listening to events.
 --
 ### BindUser
 
-Set a local representation of a user persisted to the Orchextra Database to help to create a good user segmentation. This method is optional and could be set up at any time..
+Set a local representation of a user persisted to the Orchextra Database to help to create a good user segmentation. This method is optional and could be set up at any time.
 
 | Param |
 | --- |
-| { 'crmId' : `string`, 'birthday' : `string`*(optional)*, 'gender' : `string`*(optional)* , 'tags' : `array[strings]`*(optional)* } | 
->*Example* `{ 'crmdId' : 'sergio24', 'birthday' : '1985/10/21', 'gender' : 'M', 'tags' : ['Visa', 'Master Card'] }`
+| { 'crmId' : `string`, 'birthday' : `string`*(optional)*, 'gender' : `string`*(optional)* , 'tags' : `array[string]`*(optional)* } | 
+>*Example* `{ 'crmId' : 'sergio24', 'birthday' : '1985/10/21', 'gender' : 'M', 'tags' : ['Visa', 'Master Card'] }`
 
 	orchextra.bindUser(UserDictionary)
 
-**- Birthday String Format:** aaaa/mm/dd  
+**- Birthday String Format:** yyyy/MM/dd  
  
 >*Example* `Ej: '1985/10/21'`
 
