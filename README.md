@@ -63,7 +63,7 @@ Set a local representation of a user persisted to the Orchextra Database to help
 | Param |
 | --- |
 | { 'crmId' : `string`, 'birthday' : `string`*(optional)*, 'gender' : `string`*(optional)* , 'tags' : `array[strings]`*(optional)* } | 
->*Example* `{ 'crmId' : 'sergio24', 'birthday' : '1985/10/21', 'genre' : 'M', 'tags' : ['Visa', 'Master Card'] }`
+>*Example* `{ 'crmId' : 'sergio24', 'birthday' : '1985/12/21', 'gender' : 'M', 'tags' : ['Visa', 'Master Card'] }`
 
 	orchextra.bindUser(UserDictionary)
 
