@@ -3,12 +3,15 @@ package orchextra;
 import android.app.Application;
 
 import com.gigigo.ggglogger.GGGLogImpl;
+import com.gigigo.orchextra.CustomSchemeReceiver;
 import com.gigigo.orchextra.ORCUser;
+import com.gigigo.orchextra.Orchextra;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -32,6 +35,8 @@ public class OrchextraWrapper extends CordovaPlugin {
     private OrchextraSdk orchextraSdk;
     private DataParser dataParser;
 
+    private CallbackContext schemeContext;
+
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
@@ -46,6 +51,7 @@ public class OrchextraWrapper extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
         if (action.equals(ACTION_INIT)) {
             init(args, callbackContext);
+            this.schemeContext = callbackContext;
             return true;
         } else if (action.equals(ACTION_START)) {
             start(callbackContext);
@@ -90,6 +96,8 @@ public class OrchextraWrapper extends CordovaPlugin {
                 }
             }
         });
+
+        Orchextra.setCustomSchemeReceiver(customSchemeReceiver);
     }
 
     private void stop() {
@@ -113,6 +121,24 @@ public class OrchextraWrapper extends CordovaPlugin {
 
         if (orcUser != null) {
             orchextraSdk.setUser(orcUser);
+        }
+    }
+
+    private CustomSchemeReceiver customSchemeReceiver =
+            new CustomSchemeReceiver() {
+                @Override
+                public void onReceive(String scheme) {
+                    sendReceivedScheme(scheme);
+                }
+            };
+
+    private void sendReceivedScheme(String scheme) {
+        if (scheme != null && !scheme.isEmpty()) {
+            PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, scheme);
+            pluginResult.setKeepCallback(true);
+            if (schemeContext != null) {
+                schemeContext.sendPluginResult(pluginResult);
+            }
         }
     }
 }

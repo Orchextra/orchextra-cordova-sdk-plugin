@@ -13,5 +13,5 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.Orchextra.orchextra-android-sdk:orchextrasdk:2.3.2-dev'
+  compile 'com.github.Orchextra.orchextra-android-sdk:orchextrasdk:2.3.4'
 }
