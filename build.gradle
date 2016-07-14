@@ -12,11 +12,6 @@ repositories {
         maven { url "https://jitpack.io" }
 }
 
-configurations {
-   all*.exclude group: 'com.android.support', module: 'support-v4'
-   all*.exclude group: 'com.android.support', module: 'support-annotations'
-}
-
 dependencies {
   compile 'com.github.Orchextra.orchextra-android-sdk:orchextrasdk:2.3.2-dev'
 }
