@@ -31,9 +31,11 @@ Orchextra initialization.
 
 | Params |
 | --- |
-| [ ApiKey `string`, ApiSecret `string` ] |
+| ApiKey `string` |
+| ApiSecret `string` |
+| CustomSchemeCallback |
 
-	orchextra.init('apiKey', 'apiSecret')
+	orchextra.init('apiKey', 'apiSecret', customSchemeCallback)
 --
 
 ### Start
