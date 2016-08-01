@@ -3,6 +3,7 @@ package orchextra;
 import android.app.Application;
 
 import com.gigigo.ggglogger.GGGLogImpl;
+import com.gigigo.orchextra.CustomSchemeReceiver;
 import com.gigigo.orchextra.ORCUser;
 import com.gigigo.orchextra.Orchextra;
 
@@ -10,6 +11,7 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -25,13 +27,15 @@ public class OrchextraWrapper extends CordovaPlugin {
     public static final String ACTION_INIT = "init";
     public static final String ACTION_START = "start";
     public static final String ACTION_STOP = "stop";
-    public static final String ACTION_SET_USER = "setUser";
+    public static final String ACTION_BIND_USER = "bindUser";
     public static final String ACTION_OPEN_SCANNER = "openScanner";
 
     private Application application;
 
     private OrchextraSdk orchextraSdk;
     private DataParser dataParser;
+
+    private CallbackContext schemeContext;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -47,18 +51,19 @@ public class OrchextraWrapper extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
         if (action.equals(ACTION_INIT)) {
             init(args, callbackContext);
+            this.schemeContext = callbackContext;
             return true;
         } else if (action.equals(ACTION_START)) {
             start(callbackContext);
             return true;
         } else if (action.equals(ACTION_STOP)) {
-            stop(callbackContext);
+            stop();
             return true;
-        } else if (action.equals(ACTION_SET_USER)) {
-            setUser(args, callbackContext);
+        } else if (action.equals(ACTION_BIND_USER)) {
+            bindUser(args);
             return true;
         } else if (action.equals(ACTION_OPEN_SCANNER)) {
-            openScanner(callbackContext);
+            openScanner();
             return true;
         }
         return false;
@@ -91,34 +96,49 @@ public class OrchextraWrapper extends CordovaPlugin {
                 }
             }
         });
+
+        Orchextra.setCustomSchemeReceiver(customSchemeReceiver);
     }
 
-    private void stop(final CallbackContext callbackContext) {
+    private void stop() {
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (orchextraSdk.stopSdk()) {
-                    callbackContext.success();
                 } else {
                     GGGLogImpl.log("You must call Orchextra Init method before start method");
-                    callbackContext.error(0);
                 }
             }
         });
     }
 
-    private void openScanner(CallbackContext callbackContext) {
+    private void openScanner() {
         orchextraSdk.startScanner();
-        callbackContext.success();
     }
 
-    private void setUser(JSONArray args, CallbackContext callbackContext) {
+    private void bindUser(JSONArray args) {
         ORCUser orcUser = dataParser.obtainUser(args);
 
-        if (orcUser == null) {
-            callbackContext.error(0);
+        if (orcUser != null) {
+            orchextraSdk.setUser(orcUser);
         }
+    }
 
-        orchextraSdk.setUser(orcUser);
+    private CustomSchemeReceiver customSchemeReceiver =
+            new CustomSchemeReceiver() {
+                @Override
+                public void onReceive(String scheme) {
+                    sendReceivedScheme(scheme);
+                }
+            };
+
+    private void sendReceivedScheme(String scheme) {
+        if (scheme != null && !scheme.isEmpty()) {
+            PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, scheme);
+            pluginResult.setKeepCallback(true);
+            if (schemeContext != null) {
+                schemeContext.sendPluginResult(pluginResult);
+            }
+        }
     }
 }
