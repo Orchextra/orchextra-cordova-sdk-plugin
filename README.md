@@ -33,7 +33,7 @@ Orchextra initialization.
 | --- |
 | ApiKey `string` |
 | ApiSecret `string` |
-| CustomSchemeCallback |
+| CustomSchemeCallback `returns a string with the Custom URL Scheme - Example: "myApp://news/international" `|
 
 	orchextra.init('apiKey', 'apiSecret', customSchemeCallback)
 --
