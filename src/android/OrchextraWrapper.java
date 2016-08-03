@@ -45,12 +45,14 @@ public class OrchextraWrapper extends CordovaPlugin {
 
         orchextraSdk = new OrchextraSdk();
         dataParser = new DataParser();
+
+        orchextraSdk.initSdk(application);
     }
 
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
         if (action.equals(ACTION_INIT)) {
-            init(args, callbackContext);
+            setTokenCredentials(args, callbackContext);
             this.schemeContext = callbackContext;
             return true;
         } else if (action.equals(ACTION_START)) {
@@ -69,13 +71,13 @@ public class OrchextraWrapper extends CordovaPlugin {
         return false;
     }
 
-    private void init(JSONArray args, final CallbackContext callbackContext) {
+    private void setTokenCredentials(JSONArray args, final CallbackContext callbackContext) {
         final OrchextraAuthTokens orchextraAuthTokens = dataParser.obtainApiKeyAndSecret(args);
 
         if (orchextraAuthTokens != null) {
             cordova.getActivity().runOnUiThread(new Runnable() {
                 public void run() {
-                    orchextraSdk.initSdk(application, orchextraAuthTokens, callbackContext);
+                    orchextraSdk.setTokenCredentials(orchextraAuthTokens);
                 }
             });
         } else {
