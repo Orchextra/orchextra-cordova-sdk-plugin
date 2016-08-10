@@ -29,7 +29,7 @@
 
 @implementation OrchextraWrapper
 
-#pragma mark - Init
+#pragma mark - Overriden methods
 
 - (void)pluginInitialize
 {
@@ -38,7 +38,7 @@
     self.orchextra = [Orchextra sharedInstance];
     self.orchextra.delegate = self;
     
-    [Orchextra logLevel:ORCLogLevelAll];
+    //[Orchextra logLevel:ORCLogLevelAll];
 }
 
 #pragma mark - PUBLIC
