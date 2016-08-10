@@ -38,7 +38,9 @@
     self.orchextra = [Orchextra sharedInstance];
     self.orchextra.delegate = self;
     
-    //[Orchextra logLevel:ORCLogLevelAll];
+    #if DEBUG
+        [Orchextra logLevel:ORCLogLevelAll];
+    #endif
 }
 
 #pragma mark - PUBLIC
