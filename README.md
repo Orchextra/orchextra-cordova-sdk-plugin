@@ -31,11 +31,21 @@ Orchextra initialization.
 
 | Params |
 | --- |
-| ApiKey `string` |
-| ApiSecret `string` |
+| Configuration `Dictionary` <br> {'apiKey': `string`, 'apiSecret': `string`, logLevel: `string`*(optional)*}|
 | CustomSchemeCallback `returns a string with the Custom URL Scheme - Example: "myApp://news/international" `|
 
-	orchextra.init('apiKey', 'apiSecret', customSchemeCallback)
+**- Log Level Options:**
+
+| Log Level |  |
+| --- | --- |
+|  Debug information <br> (Recommended for Developers to get debug information about Orchextra)   | "debug" |
+|  Only Error logs | "error" |
+|  Warning and error logs | "warning" |
+|  All logs <br>(Displays all logs requests and responses from network, debug, errors and warnings) | "all" |
+
+Example:
+
+	orchextra.init({'apiKey': 'myApikey', 'apiSecret': 'myApiSecret', logLevel: 'all'}, customSchemeCallback)
 --
 
 ### Start
@@ -46,6 +56,8 @@ Start listening to events.
 | successCallback |
 | errorCallback |
 
+Example:
+
 	orchextra.start(successCallback, errorCallback)
 
 --
@@ -55,6 +67,8 @@ Stop listening to events.
 | Params |
 | --- |****
 | - |
+
+Example:
 
 	orchextra.stop()
 --
