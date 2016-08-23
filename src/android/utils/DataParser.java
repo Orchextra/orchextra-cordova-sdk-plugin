@@ -19,10 +19,10 @@ public class DataParser {
 
     public OrchextraAuthTokens obtainApiKeyAndSecret(JSONArray args) {
         try {
-            OrchextraAuthTokens authTokens = new OrchextraAuthTokens();
-            authTokens.setKey(args.getString(0));
-            authTokens.setSecret(args.getString(1));
-            return authTokens;
+            JSONObject jsonObject = args.getJSONObject(0);
+
+            Gson gson = new Gson();
+            return gson.fromJson(jsonObject.toString(), OrchextraAuthTokens.class);
         } catch (Exception e) {
             return null;
         }
