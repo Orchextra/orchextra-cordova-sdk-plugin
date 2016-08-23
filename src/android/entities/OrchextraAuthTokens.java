@@ -4,6 +4,7 @@ public class OrchextraAuthTokens {
 
     private String key;
     private String secret;
+    private String logLevel;
 
     public String getKey() {
         return key;
@@ -19,5 +20,13 @@ public class OrchextraAuthTokens {
 
     public void setSecret(String secret) {
         this.secret = secret;
+    }
+
+    public void setLogLevel(String logLevel) {
+        this.logLevel = logLevel;
+    }
+
+    public String getLogLevel() {
+        return logLevel;
     }
 }

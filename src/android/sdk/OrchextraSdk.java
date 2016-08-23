@@ -13,7 +13,7 @@ public class OrchextraSdk {
     private OrchextraAuthTokens orchextraAuthTokens;
 
     public void initSdk(final Application application) {
-        Orchextra.setLogLevel(OrchextraLogLevel.NETWORK);
+        Orchextra.setLogLevel(OrchextraLogLevel.ALL);
         Orchextra.init(application, null);
     }
 
