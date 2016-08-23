@@ -8,7 +8,6 @@
 
 #import "OrchextraWrapper.h"
 
-#import <Orchextra/Orchextra.h>
 #import "CDVInvokedUrlCommand+Orchextra.h"
 
 
@@ -29,28 +28,19 @@
 
 @implementation OrchextraWrapper
 
-#pragma mark - Overriden methods
-
-- (void)pluginInitialize
-{
-    [super pluginInitialize];
-    
-    self.orchextra = [Orchextra sharedInstance];
-    self.orchextra.delegate = self;
-    
-    #if DEBUG
-        [Orchextra logLevel:ORCLogLevelAll];
-    #endif
-}
 
 #pragma mark - PUBLIC
 
 - (void)init:(CDVInvokedUrlCommand*)command;
 {
+    self.orchextra = [Orchextra sharedInstance];
+    self.orchextra.delegate = self;
+    
     self.apiKey    = [command apiKey];
     self.apiSecret = [command apiSecret];
-    
     self.schemeCallback = command.callbackId;
+    
+    [Orchextra logLevel:[command logLevel]];
 }
 
 - (void)start:(CDVInvokedUrlCommand*)command

@@ -7,6 +7,7 @@
 //
 
 #import <Cordova/CDV.h>
+#import <Orchextra/Orchextra.h>
 
 @class ORCUser;
 
@@ -18,6 +19,7 @@
 
 - (NSString *)apiKey;
 - (NSString *)apiSecret;
+- (ORCLogLevel)logLevel;
 
 #pragma mark -
 

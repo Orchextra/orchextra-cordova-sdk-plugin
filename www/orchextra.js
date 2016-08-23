@@ -2,7 +2,7 @@ var exec = require('cordova/exec');
 
 var orchextra = {
     init: function(apiKey, apiSecret, success, failure) {
-        exec(success, failure, "OrchextraWrapper", "init", [apiKey, apiSecret]);
+        exec(success, failure, "OrchextraWrapper", "init", [options]);
     },
     start: function(success, failure) {
         exec(success, failure, "OrchextraWrapper", "start", []);
