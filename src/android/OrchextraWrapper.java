@@ -1,10 +1,8 @@
 package orchextra;
 
-import android.app.Application;
-
 import com.gigigo.ggglogger.GGGLogImpl;
+import com.gigigo.orchextra.CrmUser;
 import com.gigigo.orchextra.CustomSchemeReceiver;
-import com.gigigo.orchextra.ORCUser;
 import com.gigigo.orchextra.Orchextra;
 
 import org.apache.cordova.CallbackContext;
@@ -30,8 +28,6 @@ public class OrchextraWrapper extends CordovaPlugin {
     public static final String ACTION_BIND_USER = "bindUser";
     public static final String ACTION_OPEN_SCANNER = "openScanner";
 
-    private Application application;
-
     private OrchextraSdk orchextraSdk;
     private DataParser dataParser;
 
@@ -41,12 +37,8 @@ public class OrchextraWrapper extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
 
-        application = cordova.getActivity().getApplication();
-
         orchextraSdk = new OrchextraSdk();
         dataParser = new DataParser();
-
-        orchextraSdk.initSdk(application);
     }
 
     @Override
@@ -119,7 +111,7 @@ public class OrchextraWrapper extends CordovaPlugin {
     }
 
     private void bindUser(JSONArray args) {
-        ORCUser orcUser = dataParser.obtainUser(args);
+        CrmUser orcUser = dataParser.obtainUser(args);
 
         if (orcUser != null) {
             orchextraSdk.setUser(orcUser);

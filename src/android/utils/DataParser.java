@@ -1,13 +1,12 @@
 package orchextra.utils;
 
-import com.gigigo.orchextra.ORCUser;
+import com.gigigo.orchextra.CrmUser;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -28,17 +27,16 @@ public class DataParser {
         }
     }
 
-    public ORCUser obtainUser(JSONArray args) {
+    public CrmUser obtainUser(JSONArray args) {
         try {
             JSONObject arg = (JSONObject) args.get(0);
 
             Gson gson = new Gson();
             UserMiddleWare userMiddleWare = gson.fromJson(arg.toString(), UserMiddleWare.class);
 
-            return new ORCUser(userMiddleWare.getCrmId(),
+            return new CrmUser(userMiddleWare.getCrmId(),
                     getBirthDate(userMiddleWare.getBirthday()),
-                    getGender(userMiddleWare.getGender()),
-                    new ArrayList<String>());
+                    getGender(userMiddleWare.getGender()));
         } catch (Exception e) {
             return null;
         }
@@ -60,11 +58,11 @@ public class DataParser {
         }
     }
 
-    private ORCUser.Gender getGender(String genderInString) {
+    private CrmUser.Gender getGender(String genderInString) {
         if (genderInString.equals("m") || genderInString.equals("M")) {
-            return ORCUser.Gender.ORCGenderMale;
+            return CrmUser.Gender.GenderMale;
         } else if (genderInString.equals("f") || genderInString.equals("F")) {
-            return ORCUser.Gender.ORCGenderFemale;
+            return CrmUser.Gender.GenderFemale;
         } else {
             return null;
         }

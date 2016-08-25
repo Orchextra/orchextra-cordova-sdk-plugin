@@ -2,8 +2,9 @@ package orchextra.sdk;
 
 import android.app.Application;
 
-import com.gigigo.orchextra.ORCUser;
+import com.gigigo.orchextra.CrmUser;
 import com.gigigo.orchextra.Orchextra;
+import com.gigigo.orchextra.OrchextraBuilder;
 import com.gigigo.orchextra.OrchextraLogLevel;
 
 import orchextra.entities.OrchextraAuthTokens;
@@ -12,9 +13,11 @@ public class OrchextraSdk {
 
     private OrchextraAuthTokens orchextraAuthTokens;
 
-    public void initSdk(final Application application) {
-        Orchextra.setLogLevel(OrchextraLogLevel.ALL);
-        Orchextra.init(application, null);
+    public static void initSdk(Application application) {
+        OrchextraBuilder builder = new OrchextraBuilder(application)
+                .setLogLevel(OrchextraLogLevel.ALL);
+
+        Orchextra.initialize(builder);
     }
 
     public void setTokenCredentials(OrchextraAuthTokens orchextraAuthTokens) {
@@ -23,14 +26,14 @@ public class OrchextraSdk {
 
     public boolean startSdk() {
         if (orchextraAuthTokens != null) {
-            Orchextra.start(orchextraAuthTokens.getKey(), orchextraAuthTokens.getSecret());
+            Orchextra.changeCredentials(orchextraAuthTokens.getApiKey(), orchextraAuthTokens.getApiSecret());
             return true;
         } else {
             return false;
         }
     }
 
-    public void setUser(ORCUser orcUser) {
+    public void setUser(CrmUser orcUser) {
         Orchextra.setUser(orcUser);
     }
 
