@@ -46,10 +46,12 @@
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml" />
         <source-file src="src/android/OrchextraWrapper.java" target-dir="src/orchextra" />
+        <source-file src="src/android/MainApplication.java" target-dir="src/orchextra" />
         <source-file src="src/android/entities/OrchextraAuthTokens.java" target-dir="src/orchextra/entities" />
         <source-file src="src/android/entities/UserMiddleWare.java" target-dir="src/orchextra/entities" />
         <source-file src="src/android/sdk/OrchextraSdk.java" target-dir="src/orchextra/sdk" />
         <source-file src="src/android/utils/DataParser.java" target-dir="src/orchextra/utils" />
         <framework src="build.gradle" custom="true" type="gradleReference" />
+        <hook type="after_plugin_add" src="scripts/android_app_name.js" />
     </platform>
 </plugin>
