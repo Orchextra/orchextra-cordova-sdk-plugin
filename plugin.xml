@@ -20,6 +20,8 @@
         <framework src="AVFoundation.framework" />
         <framework src="AdSupport.framework" />
         <framework src="PassKit.framework" />
+        <framework src="WebKit.framework" />
+        <framework src="SafariServices.framework" />
         <framework src="libz.dylib" />
         <framework src="src/ios/Framework/Orchextra.framework" custom="true" />
         <resource-file src="src/ios/Framework/Orchextra.bundle" />
