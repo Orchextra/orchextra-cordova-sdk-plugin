@@ -20,8 +20,10 @@ public class OrchextraSdk {
         Orchextra.initialize(builder);
     }
 
-    public void setTokenCredentials(OrchextraAuthTokens orchextraAuthTokens) {
+    public void setTokenCredentials(Application application, OrchextraAuthTokens orchextraAuthTokens) {
         this.orchextraAuthTokens = orchextraAuthTokens;
+
+        Orchextra.setGcmSendId(application, orchextraAuthTokens.getSenderId());
     }
 
     public boolean startSdk() {

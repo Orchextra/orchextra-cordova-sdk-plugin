@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-   compile('com.github.beni84.orchextra-android-sdk:orchextrasdk:2.4.4-dev:play9Release@aar')
+   compile('com.github.beni84.orchextra-android-sdk:orchextrasdk:2.4.4-dev2:play9Release@aar')
             {transitive true}
     compile 'com.google.android.gms:play-services-location:9.0.2'
     compile 'com.google.android.gms:play-services-gcm:9.0.2'

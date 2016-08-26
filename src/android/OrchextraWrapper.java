@@ -1,5 +1,7 @@
 package orchextra;
 
+import android.app.Application;
+
 import com.gigigo.ggglogger.GGGLogImpl;
 import com.gigigo.orchextra.CrmUser;
 import com.gigigo.orchextra.CustomSchemeReceiver;
@@ -32,10 +34,13 @@ public class OrchextraWrapper extends CordovaPlugin {
     private DataParser dataParser;
 
     private CallbackContext schemeContext;
+    private Application application;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
+
+        application = cordova.getActivity().getApplication();
 
         orchextraSdk = new OrchextraSdk();
         dataParser = new DataParser();
@@ -69,7 +74,7 @@ public class OrchextraWrapper extends CordovaPlugin {
         if (orchextraAuthTokens != null) {
             cordova.getActivity().runOnUiThread(new Runnable() {
                 public void run() {
-                    orchextraSdk.setTokenCredentials(orchextraAuthTokens);
+                    orchextraSdk.setTokenCredentials(application, orchextraAuthTokens);
                 }
             });
         } else {
