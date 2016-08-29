@@ -15,9 +15,12 @@ public class OrchextraSdk {
 
     public static void initSdk(Application application) {
         OrchextraBuilder builder = new OrchextraBuilder(application)
+                .setApiKeyAndSecret("null","null")
                 .setLogLevel(OrchextraLogLevel.ALL);
 
         Orchextra.initialize(builder);
+
+        Orchextra.start();
     }
 
     public void setTokenCredentials(Application application, OrchextraAuthTokens orchextraAuthTokens) {
