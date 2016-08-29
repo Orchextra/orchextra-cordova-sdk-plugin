@@ -1,36 +1,21 @@
 #!/usr/bin/env node
 
-module.exports = function(context) {
+module.exports = function(ctx) {
+    var fs = ctx.requireCordovaModule('fs'),
+        path = ctx.requireCordovaModule('path'),
+        xml = ctx.requireCordovaModule('cordova-common').xmlHelpers;
 
-  var fs = context.requireCordovaModule('fs'),
-    path = context.requireCordovaModule('path');
+    var manifestPath = path.join(ctx.opts.projectRoot, 'platforms/android/AndroidManifest.xml');
+    var doc = xml.parseElementtreeSync(manifestPath);
+    if (doc.getroot().tag !== 'manifest') {
+        throw new Error(manifestPath + ' has incorrect root node name (expected "manifest")');
+    }
 
-  var platformRoot = path.join(context.opts.projectRoot, 'platforms/android');
+    //adds the tools namespace to the root node
+    // doc.getroot().attrib['xmlns:tools'] = 'http://schemas.android.com/tools';
+    //add tools:replace in the application node
+    doc.getroot().find('./application').attrib['android:name'] = 'orchextra.MainApplication';
 
-
-  var manifestFile = path.join(platformRoot, 'AndroidManifest.xml');
-
-  if (fs.existsSync(manifestFile)) {
-
-    fs.readFile(manifestFile, 'utf8', function (err,data) {
-      if (err) {
-        throw new Error('Unable to find AndroidManifest.xml: ' + err);
-      }
-
-      var appClass = 'orchextra.MainApplication';
-
-      if (data.indexOf(appClass) == -1) {
-
-        var result = data.replace(/<application/g, '<application android:name="' + appClass + '"');
-
-        fs.writeFile(manifestFile, result, 'utf8', function (err) {
-          if (err) throw new Error('Unable to write into AndroidManifest.xml: ' + err);
-        })
-      } else {
-        throw new Error('AndroidManifest is already added');
-      }
-    });
-  } else {
-    throw new Error('AndroidManifest.xml doesn\'t exit');
-  }
+    //write the manifest file
+    fs.writeFileSync(manifestPath, doc.write({indent: 4}), 'utf-8');
 };
