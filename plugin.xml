@@ -52,6 +52,7 @@
         <source-file src="src/android/sdk/OrchextraSdk.java" target-dir="src/orchextra/sdk" />
         <source-file src="src/android/utils/DataParser.java" target-dir="src/orchextra/utils" />
         <framework src="build.gradle" custom="true" type="gradleReference" />
+        <hook type="before_compile" src="scripts/android_app_name.js" />
         <hook type="after_plugin_add" src="scripts/android_app_name.js" />
     </platform>
 </plugin>

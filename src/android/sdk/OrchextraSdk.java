@@ -19,14 +19,13 @@ public class OrchextraSdk {
                 .setLogLevel(OrchextraLogLevel.ALL);
 
         Orchextra.initialize(builder);
-
-        Orchextra.start();
     }
 
     public void setTokenCredentials(Application application, OrchextraAuthTokens orchextraAuthTokens) {
         this.orchextraAuthTokens = orchextraAuthTokens;
 
         Orchextra.setGcmSendId(application, orchextraAuthTokens.getSenderId());
+        Orchextra.start();
     }
 
     public boolean startSdk() {
