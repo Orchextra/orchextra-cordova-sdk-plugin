@@ -70,8 +70,8 @@
 {
     id value = self[key];
     
-    if ([value isKindOfClass:[NSNumber class]]) return [value doubleValue];
-    if ([value isKindOfClass:[NSString class]]) return [value doubleValue];
+    if ([value isKindOfClass:[NSNumber class]]) return [value floatValue];
+    if ([value isKindOfClass:[NSString class]]) return [value floatValue];
     
     return 0.0;
 }
@@ -81,7 +81,7 @@
     id value = self[key];
     
     if ([value isKindOfClass:[NSNumber class]]) return [value unsignedIntegerValue];
-    if ([value isKindOfClass:[NSString class]]) return [value integerValue];
+    if ([value isKindOfClass:[NSString class]]) return (NSUInteger) [value integerValue];
     
     return 0;
 }
@@ -138,7 +138,7 @@
 {
     NSString *value = [self stringForKey:key];
     
-    return [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    return [value stringByTrimmingCharactersInSet:[NSMutableCharacterSet whitespaceCharacterSet]];
 }
 
 - (NSDictionary *)dictionaryForKey:(NSString *)key

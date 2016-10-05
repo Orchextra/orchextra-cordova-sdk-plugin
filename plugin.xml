@@ -16,43 +16,44 @@
         <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
             <string></string>
         </config-file>
-        <framework src="CoreLocation.framework" />
-        <framework src="AVFoundation.framework" />
-        <framework src="AdSupport.framework" />
-        <framework src="PassKit.framework" />
-        <framework src="WebKit.framework" />
-        <framework src="SafariServices.framework" />
+        <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
+            <string></string>
+        </config-file>
+        <framework src="CoreLocation.framework" weak="true" />
+        <framework src="AVFoundation.framework" weak="true" />
+        <framework src="AdSupport.framework" weak="true" />
+        <framework src="PassKit.framework" weak="true" />
+        <framework src="WebKit.framework" weak="true" />
+        <framework src="SafariServices.framework" weak="true" />
         <framework src="libz.dylib" />
         <framework src="src/ios/Framework/Orchextra.framework" custom="true" />
         <resource-file src="src/ios/Framework/Orchextra.bundle" />
-        <source-file src="src/ios/OrchextraWrapper.h" />
+        <header-file src="src/ios/OrchextraWrapper.h" />
         <source-file src="src/ios/OrchextraWrapper.m" />
-        <source-file src="src/ios/Helpers/Categories/CDVInvokedUrlCommand+Orchextra.h" />
+        <header-file src="src/ios/Helpers/Categories/CDVInvokedUrlCommand+Orchextra.h" />
         <source-file src="src/ios/Helpers/Categories/CDVInvokedUrlCommand+Orchextra.m" />
-        <source-file src="src/ios/Helpers/Categories/AppDelegate+notification.h" />
+        <header-file src="src/ios/Helpers/Categories/AppDelegate+notification.h" />
         <source-file src="src/ios/Helpers/Categories/AppDelegate+notification.m" />
-        <source-file src="src/ios/Helpers/Categories/NSDictionary+JSON.h" />
+        <header-file src="src/ios/Helpers/Categories/NSDictionary+JSON.h" />
         <source-file src="src/ios/Helpers/Categories/NSDictionary+JSON.m" />
-        <source-file src="src/ios/Helpers/Categories/ORCUser+JSON.h" />
+        <header-file src="src/ios/Helpers/Categories/ORCUser+JSON.h" />
         <source-file src="src/ios/Helpers/Categories/ORCUser+JSON.m" />
-        <source-file src="src/ios/Helpers/Categories/NSString+Gender.h" />
+        <header-file src="src/ios/Helpers/Categories/NSString+Gender.h" />
         <source-file src="src/ios/Helpers/Categories/NSString+Gender.m" />
     </platform>
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="OrchextraWrapper">
                 <param name="android-package" value="orchextra.OrchextraWrapper" />
+                <param name="onload" value="true" />
             </feature>
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml" />
         <source-file src="src/android/OrchextraWrapper.java" target-dir="src/orchextra" />
-        <source-file src="src/android/MainApplication.java" target-dir="src/orchextra" />
         <source-file src="src/android/entities/OrchextraAuthTokens.java" target-dir="src/orchextra/entities" />
         <source-file src="src/android/entities/UserMiddleWare.java" target-dir="src/orchextra/entities" />
         <source-file src="src/android/sdk/OrchextraSdk.java" target-dir="src/orchextra/sdk" />
         <source-file src="src/android/utils/DataParser.java" target-dir="src/orchextra/utils" />
         <framework src="build.gradle" custom="true" type="gradleReference" />
-        <hook type="before_compile" src="scripts/android_app_name.js" />
-        <hook type="after_plugin_add" src="scripts/android_app_name.js" />
     </platform>
 </plugin>

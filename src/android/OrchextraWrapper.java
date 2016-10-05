@@ -24,11 +24,11 @@ import orchextra.utils.DataParser;
  */
 public class OrchextraWrapper extends CordovaPlugin {
 
-    public static final String ACTION_INIT = "init";
-    public static final String ACTION_START = "start";
-    public static final String ACTION_STOP = "stop";
-    public static final String ACTION_BIND_USER = "bindUser";
-    public static final String ACTION_OPEN_SCANNER = "openScanner";
+    private static final String ACTION_INIT = "init";
+    private static final String ACTION_START = "start";
+    private static final String ACTION_STOP = "stop";
+    private static final String ACTION_BIND_USER = "bindUser";
+    private static final String ACTION_OPEN_SCANNER = "openScanner";
 
     private OrchextraSdk orchextraSdk;
     private DataParser dataParser;
@@ -41,6 +41,8 @@ public class OrchextraWrapper extends CordovaPlugin {
         super.initialize(cordova, webView);
 
         application = cordova.getActivity().getApplication();
+
+        OrchextraSdk.initSdk(application);
 
         orchextraSdk = new OrchextraSdk();
         dataParser = new DataParser();
@@ -56,13 +58,13 @@ public class OrchextraWrapper extends CordovaPlugin {
             start(callbackContext);
             return true;
         } else if (action.equals(ACTION_STOP)) {
-            stop();
+            stop(callbackContext);
             return true;
         } else if (action.equals(ACTION_BIND_USER)) {
-            bindUser(args);
+            bindUser(args, callbackContext);
             return true;
         } else if (action.equals(ACTION_OPEN_SCANNER)) {
-            openScanner();
+            openScanner(callbackContext);
             return true;
         }
         return false;
@@ -72,7 +74,7 @@ public class OrchextraWrapper extends CordovaPlugin {
         final OrchextraAuthTokens orchextraAuthTokens = dataParser.obtainApiKeyAndSecret(args);
 
         if (orchextraAuthTokens != null) {
-            cordova.getActivity().runOnUiThread(new Runnable() {
+            cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     orchextraSdk.setTokenCredentials(application, orchextraAuthTokens);
                 }
@@ -84,7 +86,7 @@ public class OrchextraWrapper extends CordovaPlugin {
     }
 
     private void start(final CallbackContext callbackContext) {
-        cordova.getActivity().runOnUiThread(new Runnable() {
+        cordova.getThreadPool().execute(new Runnable() {
             @Override
             public void run() {
                 if (orchextraSdk.startSdk()) {
@@ -99,11 +101,12 @@ public class OrchextraWrapper extends CordovaPlugin {
         Orchextra.setCustomSchemeReceiver(customSchemeReceiver);
     }
 
-    private void stop() {
-        cordova.getActivity().runOnUiThread(new Runnable() {
+    private void stop(final CallbackContext callbackContext) {
+        cordova.getThreadPool().execute(new Runnable() {
             @Override
             public void run() {
                 if (orchextraSdk.stopSdk()) {
+                    callbackContext.success();
                 } else {
                     GGGLogImpl.log("You must call Orchextra Init method before start method");
                 }
@@ -111,15 +114,17 @@ public class OrchextraWrapper extends CordovaPlugin {
         });
     }
 
-    private void openScanner() {
+    private void openScanner(CallbackContext callbackContext) {
         orchextraSdk.startScanner();
+        callbackContext.success();
     }
 
-    private void bindUser(JSONArray args) {
+    private void bindUser(JSONArray args, CallbackContext callbackContext) {
         CrmUser orcUser = dataParser.obtainUser(args);
 
         if (orcUser != null) {
             orchextraSdk.setUser(orcUser);
+            callbackContext.success();
         }
     }
 
