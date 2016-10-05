@@ -18,6 +18,6 @@ var orchextra = {
     }
 };
 
-window.orchextra = orchextra
+window.orchextra = orchextra;
 
 module.exports = orchextra;

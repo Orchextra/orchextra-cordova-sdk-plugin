@@ -64,12 +64,16 @@
 - (void)stop:(CDVInvokedUrlCommand*)command
 {
     [self.orchextra stopOrchextraServices];
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)bindUser:(CDVInvokedUrlCommand*)command
 {
     ORCUser *user = [command user];
     [self.orchextra bindUser:user];
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)handlePush:(CDVInvokedUrlCommand*)command
@@ -81,6 +85,8 @@
 - (void)openScanner:(CDVInvokedUrlCommand*)command
 {
     [[Orchextra sharedInstance] startScanner];
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 #pragma mark - Callback Methods

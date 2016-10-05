@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>Orchextra demo</title>
+</head>
+<body>
+    <div class="app">
+        <h1>Orchextra demo</h1>
+        <div id="deviceready" class="blink">
+            <p class="event listening">Connecting to Device</p>
+            <p class="event received">Device is Ready</p>
+            <button onclick="init()">Orchextra initialization</button><br/>
+            <button onclick="start()">Start listening to events</button><br/>
+            <button onclick="stop()">Stop listening to events</button><br/>
+            <button onclick="openScanner()">Launch scanner</button><br/>
+            <button onclick="bindUser()">bind user</button>
+        </div>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script>
+        function init() {
+            OrchextraPlugin.init({
+                    apiKey: "41e8e773422bf0d4f8bd534344501214e9f312c3",
+                    apiSecret: "fcea9f4064d59b81eccbb05d50a63b0470017c5c",
+                    logLevel: "all" // optional, debug | error | warning | all
+                },
+                function (result) {
+                    // may be called with a Custom URL Scheme like "myApp://news/international"
+                    console.log("Success: " + JSON.stringify(result));
+                },
+                function (error) {
+                    console.log("Error: " + error);
+                })
+        }
+
+        function start() {
+            OrchextraPlugin.start(
+                function () {
+                    console.log("Success!");
+                },
+                function (error) {
+                    console.log("Error: " + error);
+                })
+        }
+
+        function stop() {
+            OrchextraPlugin.stop(
+                function (result) {
+                    console.log("Success!");
+                },
+                function (error) {
+                    console.log("Error: " + error);
+                })
+        }
+
+        function openScanner() {
+            OrchextraPlugin.openScanner(
+                function (result) {
+                    console.log("Success!");
+                },
+                function (error) {
+                    console.log("Error: " + error);
+                })
+        }
+
+
+        function bindUser() {
+            OrchextraPlugin.bindUser({
+                    crmId: 'eddy123',
+                    birthday: '1977/04/22',
+                    gender : 'M',
+                    tags : ['Visa', 'Master Card']
+                },
+                function (result) {
+                    console.log("Success!");
+                },
+                function (error) {
+                    console.log("Error: " + error);
+                })
+        }
+
+    </script>
+</body>
+</html>
